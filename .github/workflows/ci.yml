@@ -50,7 +50,7 @@ jobs:
           type=sha
 
     - name: Touch .env file
-      run: echo "touch .env" > .env
+      run: touch .env
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
