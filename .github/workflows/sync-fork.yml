@@ -1,0 +1,21 @@
+name: Sync Fork
+
+on:
+  schedule:
+    # daily
+    - cron: '0 0 * * *'
+  # on button click
+  workflow_dispatch: 
+
+jobs:
+  sync:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: tgymnich/fork-sync@v1.8
+        with:
+          owner: plaid
+          repo: quickstart
+          base: master
+          head: master
