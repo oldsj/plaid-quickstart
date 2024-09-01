@@ -1,0 +1,20 @@
+{{- $root := . -}}
+{{- range $component, $config := .Values.components }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "plaid-quickstart.fullname" $root }}-{{ $component }}
+  labels:
+    {{- include "plaid-quickstart.labels" $root | nindent 4 }}
+spec:
+  type: {{ $config.service.type }}
+  ports:
+    - port: {{ $config.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "plaid-quickstart.selectorLabels" $root | nindent 4 }}
+
+{{- end }}

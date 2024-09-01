@@ -1,0 +1,21 @@
+{{- $root := . -}}
+{{- range $component, $config := .Values.components }}
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "plaid-quickstart.fullname" $root }}-{{ $component }}-test-connection"
+  labels:
+    {{- include "plaid-quickstart.labels" $root | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "plaid-quickstart.fullname" $root }}-{{ $component }}:{{ $config.service.port }}']
+  restartPolicy: Never
+
+{{- end }}
